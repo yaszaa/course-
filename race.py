@@ -6,9 +6,9 @@ TERRAINS = ["asphalt", "sand", "mud", "rocky"]
 COMPLEXITIES = ["normal", "rapid", "subtle"]
 
 class TrackPart:
-   def __init__(self, length=None, terrain=None , complexity=None):
+   def __init__(self, length=None, terrain=None, complexity=None):
     
-    self.length = randint(0,10)
+    self.length = randint(0, 10)
     self.terrain = choice(["asphalt","sand","mud","rocky"])
     self.complexity = choice(["normal","rapid","subtle"])
     
@@ -46,62 +46,62 @@ class Car():
          self.mud_speed=randchoice(0.5,1.5)
          self.rocky_speed=randchoice(0.5,1.5)
     
-     def time_for_part(self,my_terrain, My_car, My_pilot):
+     def time_for_part(self,my_terrain, my_car, my_pilot):
     	    
     	    if my_terrain.terrain is "asphalt" and my_terrain.complexity is "normal":
-    	        Speed = 1 + My_pilot.normal_speed * My_car.asphalt_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.normal_speed * my_car.asphalt_speed
+    	        time = my_terrain.length / speed
     	    elif  my_terrain.terrain is "asphalt" and my_terrain.complexity is "rapid":
-    	        Speed = 1 + My_pilot.rapid_speed * My_car.asphalt_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.rapid_speed * my_car.asphalt_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "asphalt" and my_terrain.complexity is "subtle":       
-    	        Speed = 1 + My_pilot.subtle_speed * My_car.asphalt_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.subtle_speed * my_car.asphalt_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "sand" and my_terrain.complexity is "normal":       
-    	        Speed = 1 + My_pilot.normal_speed * My_car.sand_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.normal_speed * my_car.sand_speed
+    	        time = my_terrain.length / speed
     	    elif  my_terrain.terrain is "sand" and my_terrain.complexity is "rapid":
-    	        Speed = 1 + My_pilot.rapid_speed * My_car.sand_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.rapid_speed * my_car.sand_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "sand" and my_terrain.complexity is "subtle":       
-    	        Speed = 1 + My_pilot.subtle_speed * My_car.sand_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.subtle_speed * my_car.sand_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "mud" and my_terrain.complexity is "normal":       
-    	        Speed = 1 + My_pilot.normal_speed * My_car.mud_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.normal_speed * my_car.mud_speed
+    	        time = my_terrain.length / speed
     	    elif  my_terrain.terrain is "mud" and my_terrain.complexity is "rapid":
-    	        Speed = 1 + My_pilot.rapid_speed * My_car.mud_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.rapid_speed * my_car.mud_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "mud" and my_terrain.complexity is "subtle":       
-    	        Speed = 1 + My_pilot.subtle_speed * My_car.mud_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.subtle_speed * my_car.mud_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "rocky" and my_terrain.complexity is "normal":       
-    	        Speed = 1 + My_pilot.normal_speed * My_car.rocky_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.normal_speed * my_car.rocky_speed
+    	        time = my_terrain.length / speed
     	    elif  my_terrain.terrain is "rocky" and my_terrain.complexity is "rapid":
-    	        Speed = 1 + My_pilot.rapid_speed * My_car.rocky_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.rapid_speed * my_car.rocky_speed
+    	        time = my_terrain.length / speed
     	    elif my_terrain.terrain is "rocky" and my_terrain.complexity is "subtle":       
-    	        Speed = 1 + My_pilot.subtle_speed * My_car.rocky_speed
-    	        Time = my_terrain.length / Speed
+    	        speed = 1 + my_pilot.subtle_speed * my_car.rocky_speed
+    	        time = my_terrain.length / speed
     	  
-    	    return Time
+    	    return time
 
 
      def time_for_track(self,track,car,pilote):
         time = 0
-        for tronçons in track:
-            time = time + self.time_for_part(tronçons, car, pilote)
+        for troncons in track:
+            time = time + self.time_for_part(troncons, car, pilote)
         return time
 
 
 def main():
 
-	####### Génération d'une piste de 20 tronçons
-	print ("#### Génération d'une piste de 20 tronçons #### \n")
+	####### Génération d'une piste de 20 troncons
+	print ("#### Génération d'une piste de 20 troncons #### \n")
 
-	mes_tronçons= Tack()
-	piste= mes_tronçons.parts
+	mes_troncons= Tack()
+	piste= mes_troncons.parts
 	for pis in piste:
 	  print (pis.complexity,",",pis.terrain,"(",pis.length,")")
 	print ("\n")
@@ -120,22 +120,21 @@ def main():
 
 	for (voiture,pilot) in list_car_pilot:
 	    
-	        Time1 = car.time_for_track(piste , voiture, pilot)
-	        times.append([Time1,(voiture.name,pilot.name)])
+	        time1 = car.time_for_track(piste , voiture, pilot)
+	        times.append([time1,(voiture.name,pilot.name)])
 	#print (times)
 	        
-	for t in times:
-	    print("["+str(t[0]),", Car",t[1][0],"with Pilot",t[1][1]+"]")
+	for time in times:
+	    print("["+str(time[0]),", Car",time[1][0],"with Pilot",time[1][1]+"]")
 	    
 	print ("\n")
 	print ("#### Affichage du vainqueur  ####\n")
 
 	small_time = times[0][0]
 	index = times[0]
-	for t in times:
-	    if t[0] < small_time:
-	        small_time=t[0]
-	        index= t
-	print ("the winner is Car :",index[1][0], "with Pilot",index[1][1],"with Time :",index[0] )
-if __name__ == '__main__':
-    main()
+	for time in times:
+	    if time[0] < small_time:
+	        small_time=time[0]
+	        index= time
+	print ("the winner is Car :",index[1][0], "with Pilot",index[1][1],"with time :",index[0] )
+main()
