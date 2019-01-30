@@ -15,12 +15,12 @@ class TrackPart:
         self.terrain = choice(["asphalt", "sand", "mud", "rocky"])
         self.complexity = choice(["normal", "rapid", "subtle"])
 
-class Tack():
-    """ missing doctring """
+class Track():
+    """ class Track """
     # pylint: disable=R0903
     @staticmethod
     def generation(num):
-        """ missing doctring """
+        """ je suis generation """
         parts = []
         for _ in range(0, num):
             part = TrackPart()
@@ -28,16 +28,16 @@ class Tack():
         return parts
 
     def __init__(self, parts=None):
-        """ missing doctring """
+        """ je suis init """
         if parts is None:
             self.parts = self.generation(20)
         else:
             self.parts = self.generation(parts)
 
 class Pilot():
-    """ missing doctring """
+    """ class Pilot """
     # pylint: disable=R0903
-    def __init__(self, name=None, normal_speed=None, rapid_speed=None, subtle_speed=None):
+    def __init__(self):
         # pylint: disable=W0612,W0613
         self.name = choice(ascii_uppercase)
         self.normal_speed = randchoice(0.5, 1.5)
@@ -45,94 +45,125 @@ class Pilot():
         self.subtle_speed = randchoice(0.5, 1.5)
 
 class Car():
-    """ missing doctring """
+    """ class Car """
     # pylint: disable=too-many-arguments
-    # pylint: disable=C0301
-    def __init__(self, name=None, pilot=Pilot(), asphalt_speed=None, sand_speed=None, mud_speed=None, rocky_speed=None):
-        # pylint: disable=W0612,W0613
-        self.name = randint(1, 20)
-        self.pilot = pilot
-        self.asphalt_speed = randchoice(0.5, 1.5)
-        self.sand_speed = randchoice(0.5, 1.5)
-        self.mud_speed = randchoice(0.5, 1.5)
-        self.rocky_speed = randchoice(0.5, 1.5)
-    @staticmethod
-    def time_for_part(my_terrain, my_car, my_pilot):
-        """ missing doctring """
-        if my_terrain.terrain == "asphalt" and my_terrain.complexity == "normal":
-            speed = 1 + my_pilot.normal_speed * my_car.asphalt_speed
-            time = my_terrain.length / speed
-        elif  my_terrain.terrain == "asphalt" and my_terrain.complexity == "rapid":
-            speed = 1 + my_pilot.rapid_speed * my_car.asphalt_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "asphalt" and my_terrain.complexity == "subtle":
-            speed = 1 + my_pilot.subtle_speed * my_car.asphalt_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "sand" and my_terrain.complexity == "normal":
-            speed = 1 + my_pilot.normal_speed * my_car.sand_speed
-            time = my_terrain.length / speed
-        elif  my_terrain.terrain == "sand" and my_terrain.complexity == "rapid":
-            speed = 1 + my_pilot.rapid_speed * my_car.sand_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "sand" and my_terrain.complexity == "subtle":
-            speed = 1 + my_pilot.subtle_speed * my_car.sand_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "mud" and my_terrain.complexity == "normal":
-            speed = 1 + my_pilot.normal_speed * my_car.mud_speed
-            time = my_terrain.length / speed
-        elif  my_terrain.terrain == "mud" and my_terrain.complexity == "rapid":
-            speed = 1 + my_pilot.rapid_speed * my_car.mud_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "mud" and my_terrain.complexity == "subtle":
-            speed = 1 + my_pilot.subtle_speed * my_car.mud_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "rocky" and my_terrain.complexity == "normal":
-            speed = 1 + my_pilot.normal_speed * my_car.rocky_speed
-            time = my_terrain.length / speed
-        elif  my_terrain.terrain == "rocky" and my_terrain.complexity == "rapid":
-            speed = 1 + my_pilot.rapid_speed * my_car.rocky_speed
-            time = my_terrain.length / speed
-        elif my_terrain.terrain == "rocky" and my_terrain.complexity == "subtle":
-            speed = 1 + my_pilot.subtle_speed * my_car.rocky_speed
-            time = my_terrain.length / speed
+    def __init__(self,
+                 name=None,
+                 pilot=Pilot(),
+                 asphalt_speed=None,
+                 sand_speed=None,
+                 mud_speed=None,
+                 rocky_speed=None):
+    # pylint: disable=W0613
+        if name is None:
+            self.name = randint(1, 20)
+        else:
+            self.name = name
+        self.pilot = Pilot()
+        if asphalt_speed is None:
+            self.asphalt_speed = randchoice(0.5, 1.5)
+        else:
+            self.asphalt_speed = asphalt_speed
+        if sand_speed is None:
+            self.sand_speed = randchoice(0.5, 1.5)
+        else:
+            self.sand_speed = sand_speed
+        if mud_speed is None:
+            self.mud_speed = randchoice(0.5, 1.5)
+        else:
+            self.mud_speed = mud_speed
+        if rocky_speed is None:
+            self.rocky_speed = randchoice(0.5, 1.5)
+        else:
+            self.rocky_speed = rocky_speed
+    def time_for_part(self, part, pilot):
+        """ fonction time for part """
+        # pylint: disable=W0613, R0912
+        speed = 1
+        if part.terrain == "asphalt":
+            speed *= self.asphalt_speed
+            if part.complexity == "normal":
+                speed *= self.pilot.normal_speed
+                time = part.length / speed
+            elif part.complexity == "rapid":
+                speed *= self.pilot.rapid_speed
+                time = part.length / speed
+            elif part.complexity == "subtle":
+                speed *= self.pilot.subtle_speed
+                time = part.length / speed
+        elif part.terrain == "sand":
+            speed *= self.sand_speed
+            if part.complexity == "normal":
+                speed *= self.pilot.normal_speed
+                time = part.length / speed
+            elif part.complexity == "rapid":
+                speed *= self.pilot.rapid_speed
+                time = part.length / speed
+            elif part.complexity == "subtle":
+                speed *= self.pilot.subtle_speed
+                time = part.length / speed
+        elif part.terrain == "mud":
+            speed *= self.mud_speed
+            if part.complexity == "normal":
+                speed *= self.pilot.normal_speed
+                time = part.length / speed
+            elif part.complexity == "rapid":
+                speed *= self.pilot.rapid_speed
+                time = part.length / speed
+            elif part.complexity == "subtle":
+                speed *= self.pilot.subtle_speed
+                time = part.length / speed
+        elif part.terrain == "rocky":
+            speed *= self.rocky_speed
+            if part.complexity == "normal":
+                speed *= self.pilot.normal_speed
+                time = part.length / speed
+            elif part.complexity == "rapid":
+                speed *= self.pilot.rapid_speed
+                time = part.length / speed
+            elif part.complexity == "subtle":
+                speed *= self.pilot.subtle_speed
+                time = part.length / speed
         return time
 
 
-    def time_for_track(self, track, car, pilote):
-        """ missing doctring """
+
+
+    def time_for_track(self, track, pilote):
+        """ fonction time for track """
+
         time = 0
-        for troncons in track:
-            time = time + self.time_for_part(troncons, car, pilote)
+        for part in track.parts:
+            time = time + self.time_for_part(part, pilote)
         return time
 
 
 def main():
-    """ missing doctring """
+    """ fonction main """
 
     ####### Génération d'une piste de 20 troncons
     print("#### Génération d'une piste de 20 troncons #### \n")
 
-    mes_troncons = Tack()
+    mes_troncons = Track()
     piste = mes_troncons.parts
     for pis in piste:
         print(pis.complexity, ",", pis.terrain, "(", pis.length, ")")
     print("\n")
     ###### Génération 5 voitures avec pilotes
     print("#### Génération 5 voitures avec pilotes ####\n")
-    list_car_pilot = []
+    list_car = []
 
     for _ in range(0, 5):
         car = Car()
-        pilot = Pilot()
-        list_car_pilot.append((car, pilot))
-        print("Car", car.name, "with Pilot", pilot.name)
+        list_car.append(car)
+        print("Car", car.name, "with Pilot", car.pilot.name)
     print("\n")
     print("#### Affichage du temps ####\n")
     times = []
 
-    for (voiture, pilot) in list_car_pilot:
-        time1 = car.time_for_track(piste, voiture, pilot)
-        times.append([time1, (voiture.name, pilot.name)])
+    for car in list_car:
+        time1 = car.time_for_track(mes_troncons, car.pilot)
+        times.append([time1, (car.name, car.pilot.name)])
     #print (times)
     for time in times:
         print("["+str(time[0]), "Car", time[1][0], "with Pilot", time[1][1]+"]")
